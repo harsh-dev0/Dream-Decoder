@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dream Decoder 🧠✨
 
-## Getting Started
+**Dream Decoder** is a playful, interactive web app built with **Next.js**, **NextAuth**, and **TailwindCSS**, designed to decode your dreams based on your daily routine and Twitter activity.
 
-First, run the development server:
+## 🌟 Features
+
+- 🔐 OAuth login with Twitter via `next-auth`
+- ✍️ Manual input of daily routine
+- 🧠 Fun dream "decoding" logic (extendable with AI/LLMs)
+- 🍪 Session stored securely (optional local storage fallback)
+- 🎨 Clean Gen-Z friendly UI using Tailwind and ShadCN components
+
+## 📦 Tech Stack
+
+- **Next.js App Router**
+- **NextAuth.js** (Twitter Provider)
+- **TailwindCSS + ShadCN/UI**
+- **Typescript**
+- Optional: Animate with Framer Motion
+
+## 🚀 Running Locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+git clone https://github.com/yourname/dream-decoder.git
+cd dream-decoder
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Add `.env.local`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXTAUTH_SECRET=your_secret
+NEXTAUTH_URL=http://localhost:3000
+TWITTER_CLIENT_ID=your_id
+TWITTER_CLIENT_SECRET=your_secret
+```
 
-## Learn More
+2. Optional: Extend `types/next-auth.d.ts` for session typing
 
-To learn more about Next.js, take a look at the following resources:
+## ✅ To-Do
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [x] Twitter OAuth
+- [x] Manual routine entry
+- [x] Dream decoding dummy logic
+- [ ] Add AI integration (OpenAI or similar)
+- [ ] Mobile-first polishing & animations
+- [ ] Deploy on Vercel 🚀
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📸 Screenshots
 
-## Deploy on Vercel
+_(Will Add later after first deployment)_
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built by [me](https://twitter.com/itshp7) with love💜
+
+☕ [Support the grind](https://www.buymeacoffee.com/itshp7)
+If you like what I’m building, consider supporting — it keeps the caffeine flowing!
+
+---
+
+## 📓 Journal Summary (April 11)
+
+- Integrated **NextAuth.js** with Twitter OAuth
+- Debugged common issues (callback URLs, session handling, typing)
+- Set up `accessToken` in session using callbacks & extended session type
+- Created `ThemeProvider` for dark/light toggle
+- Designed `DreamDecoderForm` component with 3 inputs:
+  1. Twitter Auth
+  2. Daily Routine
+  3. Dream Decoding Output
+- Generated 2 logo concepts with Gen-Z vibes
+- Improved understanding of OAuth2, JWT, and SSR auth flows
+
+---
