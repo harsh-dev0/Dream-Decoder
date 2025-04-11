@@ -72,7 +72,6 @@ If you like what I’m building, consider supporting — it keeps the caffeine f
   1. Twitter Auth
   2. Daily Routine
   3. Dream Decoding Output
-- Generated 2 logo concepts with Gen-Z vibes
 - Improved understanding of OAuth2, JWT, and SSR auth flows
 
 ---
