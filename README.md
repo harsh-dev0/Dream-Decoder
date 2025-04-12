@@ -75,3 +75,13 @@ If you like what I’m building, consider supporting — it keeps the caffeine f
 - Improved understanding of OAuth2, JWT, and SSR auth flows
 
 ---
+
+## 📓 Journal Summary (April 12)
+
+- 🧠 Integrated an **LLM-based dream decoder** (mock setup for now, replacing dummy logic)
+- 🎨 Made significant **UI improvements** for better UX and responsiveness
+- 🔁 Fixed **Twitter login** issues — now smooth login/logout experience using `next-auth`
+- 🔍 Explored and experimented with **Puppeteer** to fetch user Twitter activity (will finalize tomorrow)
+- 🛠️ Setup groundwork to analyze real Twitter data and combine it with daily routine for smarter dream decoding
+
+---

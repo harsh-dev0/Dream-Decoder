@@ -1,6 +1,5 @@
 import AuthButtons from "./AuthButtons"
 import ThemeToggle from "./ThemeToggle"
-import { Button } from "./ui/button"
 
 const Navbar = () => {
   return (
