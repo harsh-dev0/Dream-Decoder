@@ -17,17 +17,20 @@ export default function DreamDecoderForm() {
     setLoading(true)
     startTransition(async () => {
       try {
-        const res = await fetch("/api/dreamdecode", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            dream: Dream,
-            routine,
-          }),
-        })
+        const res = await fetch(
+          "https://dream-decodebackend-production.up.railway.app/api/dream-roast",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username,
+              dream: Dream,
+              routine,
+            }),
+          }
+        )
 
         const data = await res.json()
 
@@ -44,7 +47,6 @@ export default function DreamDecoderForm() {
       }
     })
   }
-
   return (
     <div className="max-w-xl mx-auto mt-10 p-6 rounded-2xl shadow-lg bg-background border">
       {/* 1. Enter Daily Username */}

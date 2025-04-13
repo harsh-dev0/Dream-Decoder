@@ -1,19 +1,16 @@
 import Groq from "groq-sdk"
 import { NextRequest, NextResponse } from "next/server"
-import chromium from "@sparticuz/chromium"
-import puppeteer from "puppeteer-core"
+import puppeteer from "puppeteer"
 interface Tweet {
   text: string
 }
 
 const getTweets = async (username: string) => {
   const browser = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
+    headless: true,
+    userDataDir: "./tmp/twitter-user-data",
+    args: ["--no-sandbox"],
   })
-
   const page = await browser.newPage()
 
   try {
@@ -21,6 +18,7 @@ const getTweets = async (username: string) => {
       waitUntil: "networkidle2",
     })
 
+    // Check if already logged in
     const isLoggedIn = await page
       .evaluate(
         () =>
@@ -71,6 +69,7 @@ const getTweets = async (username: string) => {
       await page.waitForNavigation({ waitUntil: "networkidle2" })
     }
 
+    // Navigate to user's profile
     await page.goto(`https://twitter.com/${username}`, {
       waitUntil: "domcontentloaded",
     })

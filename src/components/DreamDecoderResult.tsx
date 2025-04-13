@@ -65,6 +65,7 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
 
   // Fixed the regex matches to handle null cases
   const dreamMeterMatch = decoded.match(/🎯 Dream Meter: (\d+)%/)
+
   const dreamMeter = dreamMeterMatch
     ? dreamMeterMatch[0]
     : "🎯 Dream Meter: 42%"
