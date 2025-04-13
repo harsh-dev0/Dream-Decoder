@@ -79,9 +79,32 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
     ? decoded.split("🟢 Delulu or Doing Fine?")[1].split("🔴")[0]
     : "- You're making progress, but are you really on the right track?"
 
-  const caughtSection = decoded.includes("🔴 Caught in 4K:")
-    ? decoded.split("🔴 Caught in 4K:")[1].split("⏳")[0]
-    : "- Let's be honest about where you're falling short."
+  let caughtSection = "- Let's be honest about where you're falling short."
+
+  // Check for "🔴 Caught in 4K:" first
+  if (decoded.includes("🔴 Caught in 4K:")) {
+    const parts = decoded.split("🔴 Caught in 4K:")
+    if (parts.length > 1) {
+      const secondPart = parts[1]
+      if (secondPart.includes("⏳")) {
+        caughtSection = secondPart.split("⏳")[0]
+      } else {
+        caughtSection = secondPart
+      }
+    }
+  }
+  // If first check fails, try with "🔴 Caught in4K:"
+  else if (decoded.includes("🔴 Caught in4K:")) {
+    const parts = decoded.split("🔴 Caught in4K:")
+    if (parts.length > 1) {
+      const secondPart = parts[1]
+      if (secondPart.includes("⏳")) {
+        caughtSection = secondPart.split("⏳")[0]
+      } else {
+        caughtSection = secondPart
+      }
+    }
+  }
 
   const timeSection = decoded.includes("⏳ Time to Touch Grass")
     ? decoded.split("⏳ Time to Touch Grass")[1].split("🧠")[0]
@@ -118,7 +141,7 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
           <div className="flex items-start space-x-2 mt-4">
             <div className="h-5 w-5 bg-red-600 rounded-full mt-1 flex-shrink-0"></div>
             <div>
-              <span className="font-semibold">Caught in4K:</span>
+              <span className="font-semibold">Caught in 4K:</span>
               <p>{caughtSection}</p>
             </div>
           </div>
