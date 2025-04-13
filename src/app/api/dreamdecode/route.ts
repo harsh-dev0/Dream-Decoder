@@ -1,7 +1,9 @@
 import Groq from "groq-sdk"
 import { NextRequest, NextResponse } from "next/server"
 import puppeteer from "puppeteer"
-import fs from "fs"
+interface Tweet {
+  text: string
+}
 
 const getTweets = async (username: string) => {
   const browser = await puppeteer.launch({
@@ -121,7 +123,7 @@ export async function POST(req: NextRequest) {
 
     let userContext = ""
     let bio = ""
-    let tweets: any[] = []
+    let tweets: Tweet[] = []
 
     if (username) {
       const { bio: scrapedBio, tweets: scrapedTweets } = await getTweets(
@@ -133,7 +135,7 @@ export async function POST(req: NextRequest) {
       userContext = `
 User Bio: ${bio}
 Recent Tweets:
-${tweets.map((t: any) => `- ${t.text}`).join("\n")}
+${tweets.map((t: Tweet) => `- ${t.text}`).join("\n")}
 `
     }
 
