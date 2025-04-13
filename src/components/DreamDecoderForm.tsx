@@ -36,17 +36,20 @@ export default function DreamDecoderForm() {
     setLoading(true)
     startTransition(async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/dream-roast", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: values.username,
-            dream: values.dream,
-            routine: values.routine,
-          }),
-        })
+        const res = await fetch(
+          "https://dream-decodebackend-production.up.railway.app/api/dream-roast",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: values.username,
+              dream: values.dream,
+              routine: values.routine,
+            }),
+          }
+        )
 
         const data = await res.json()
 
