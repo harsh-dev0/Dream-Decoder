@@ -1,36 +1,52 @@
 "use client"
+
 import { useState, useTransition } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { FaSpinner } from "react-icons/fa"
 import DreamDecoderResult from "./DreamDecoderResult"
+import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import * as z from "zod"
+import { cn } from "@/lib/utils"
+
+const formSchema = z.object({
+  username: z.string().optional(),
+  routine: z.string().optional(),
+  dream: z.string().min(1, "Please enter your dream"),
+})
 
 export default function DreamDecoderForm() {
   const [, startTransition] = useTransition()
-  const [routine, setRoutine] = useState("")
   const [decoded, setDecoded] = useState("")
   const [loading, setLoading] = useState(false)
-  const [username, setUsername] = useState("")
-  const [Dream, setDream] = useState("")
+  const [showResult, setShowResult] = useState(false)
 
-  const handleDecode = async () => {
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      routine: "",
+      dream: "",
+    },
+  })
+
+  const handleDecode = async (values: z.infer<typeof formSchema>) => {
     setLoading(true)
     startTransition(async () => {
       try {
-        const res = await fetch(
-          "https://dream-decodebackend-production.up.railway.app/api/dream-roast",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username,
-              dream: Dream,
-              routine,
-            }),
-          }
-        )
+        const res = await fetch("http://localhost:3001/api/dream-roast", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username: values.username,
+            dream: values.dream,
+            routine: values.routine,
+          }),
+        })
 
         const data = await res.json()
 
@@ -39,6 +55,7 @@ export default function DreamDecoderForm() {
         } else {
           setDecoded("Error: " + data.error)
         }
+        setShowResult(true)
       } catch (err) {
         setDecoded("Something went wrong.")
         console.error(err)
@@ -47,78 +64,123 @@ export default function DreamDecoderForm() {
       }
     })
   }
+
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 rounded-2xl shadow-lg bg-background border">
-      {/* 1. Enter Daily Username */}
-      <div className="mb-6">
-        <label className="block text-xl font-semibold mb-2">
-          1. Enter Your username
-        </label>
-        <Textarea
-          rows={4}
-          placeholder="Your Username without any @ example: itshp7"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          disabled={loading} // Disable when loading
-        />
-      </div>
-      <div className="mb-6">
-        <label className="block text-xl text-center font-semibold mb-2">
-          Or
-        </label>
-      </div>
-      {/* 2. Enter Daily Routine */}
-      <div className="mb-6">
-        <label className="block text-xl font-semibold mb-2">
-          2. Manually enter your daily routine
-        </label>
-        <Textarea
-          rows={4}
-          placeholder="Wake up, scroll Twitter, drink coffee, daydream..."
-          value={routine}
-          onChange={(e) => setRoutine(e.target.value)}
-          disabled={loading} // Disable when loading
-        />
+    <div className="w-full max-w-6xl mx-auto mt-10 p-6 flex flex-col lg:flex-row lg:items-start lg:gap-8">
+      <div
+        className={cn(
+          "w-full transition-all duration-500 ease-in-out",
+          showResult && !loading ? "lg:w-1/2" : "lg:w-full"
+        )}
+      >
+        <div className="p-6 rounded-2xl shadow-lg bg-background border">
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleDecode)}
+              className="space-y-6"
+            >
+              {/* 1. Enter Username */}
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xl font-semibold">
+                      1. Enter Your username
+                    </FormLabel>
+                    <Textarea
+                      rows={3}
+                      placeholder="Your Username without any @ example: itshp7"
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormItem>
+                )}
+              />
+
+              <div className="text-center font-semibold">Or</div>
+
+              {/* 2. Enter Daily Routine */}
+              <FormField
+                control={form.control}
+                name="routine"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xl font-semibold">
+                      2. Manually enter your daily routine
+                    </FormLabel>
+                    <Textarea
+                      rows={3}
+                      placeholder="Wake up, scroll Twitter, drink coffee, daydream..."
+                      disabled={loading}
+                      {...field}
+                    />
+                  </FormItem>
+                )}
+              />
+
+              {/* 3. Your end Goal or dream */}
+              <FormField
+                control={form.control}
+                name="dream"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-xl font-semibold">
+                      3. Your end Goal or dream
+                    </FormLabel>
+                    <Textarea
+                      rows={3}
+                      placeholder="Astronaut..."
+                      disabled={loading}
+                      required
+                      {...field}
+                    />
+                  </FormItem>
+                )}
+              />
+
+              {/* 4. Decode Your Dream */}
+              <div>
+                <FormLabel className="block text-xl font-semibold mb-2">
+                  4. Decode your dream
+                </FormLabel>
+                <Button
+                  type="submit"
+                  disabled={loading || form.formState.isSubmitting}
+                  className="w-full"
+                >
+                  {loading ? (
+                    <>
+                      Decoding...{" "}
+                      <FaSpinner className="animate-spin inline-block ml-2" />
+                    </>
+                  ) : (
+                    "Decode My Dream ✨"
+                  )}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </div>
 
-      <div className="mb-6">
-        <label className="block text-xl font-semibold mb-2">
-          3. Your end Goal or dream
-        </label>
-        <Textarea
-          rows={4}
-          required
-          placeholder="Astronaut..."
-          value={Dream}
-          onChange={(e) => setDream(e.target.value)}
-          disabled={loading} // Disable when loading
-        />
-      </div>
-
-      {/* 3. Decode Your Dream */}
-      <div className="mb-6">
-        <label className="block text-xl font-semibold mb-2">
-          4. Decode your dream
-        </label>
-        <Button
-          onClick={handleDecode}
-          disabled={loading || (!Dream && !username)}
-        >
-          {loading ? (
-            <>
-              Decoding...{" "}
-              <FaSpinner className="animate-spin inline-block ml-2" />
-            </>
-          ) : (
-            "Decode My Dream ✨"
-          )}
-        </Button>
-
-        {/* Show shimmer effect while loading or the result when done */}
-        {loading ? (
-          <DreamDecoderResult decoded={null} />
-        ) : (
-          decoded && <DreamDecoderResult decoded={decoded} />
+      {/* Result section with animation */}
+      <div
+        className={cn(
+          "w-full mt-6 lg:mt-0 transition-all duration-500 ease-in-out",
+          showResult
+            ? "lg:w-1/2 opacity-100 translate-x-0"
+            : "lg:w-0 opacity-0 lg:translate-x-full"
+        )}
+      >
+        {decoded && (
+          <div className="p-6 rounded-2xl shadow-lg bg-background border h-full">
+            {loading ? (
+              <DreamDecoderResult decoded={null} />
+            ) : (
+              decoded && <DreamDecoderResult decoded={decoded} />
+            )}
+          </div>
         )}
       </div>
     </div>

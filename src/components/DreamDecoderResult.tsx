@@ -68,7 +68,7 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
 
   const dreamMeter = dreamMeterMatch
     ? dreamMeterMatch[0]
-    : "🎯 Dream Meter: 42%"
+    : "🎯 Dream Meter: 50%"
 
   const dreamQuoteMatch = decoded.match(/"([^"]+)"/)
   const dreamQuote = dreamQuoteMatch
