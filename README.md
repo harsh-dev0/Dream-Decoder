@@ -51,7 +51,12 @@ TWITTER_CLIENT_SECRET=your_secret
 
 ## 📸 Screenshots
 
+### 🔹 First Deployment
+
 ![First Deployment](./public/screenshots/dev1.png)
+
+### 🔹 Second Deployment
+
 ![Second Deployment](./public/screenshots/dev2.png)
 
 ---
