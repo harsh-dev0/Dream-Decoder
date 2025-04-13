@@ -79,7 +79,7 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
     ? decoded.split("🟢 Delulu or Doing Fine?")[1].split("🔴")[0]
     : "- You're making progress, but are you really on the right track?"
 
-  const caughtSection = decoded.includes("🔴 Caught in4K:")
+  const caughtSection = decoded.includes("🔴 Caught in 4K:")
     ? decoded.split("🔴 Caught in 4K:")[1].split("⏳")[0]
     : "- Let's be honest about where you're falling short."
 

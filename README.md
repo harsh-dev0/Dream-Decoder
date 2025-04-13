@@ -84,4 +84,16 @@ If you like what I’m building, consider supporting — it keeps the caffeine f
 - 🔍 Explored and experimented with **Puppeteer** to fetch user Twitter activity (will finalize tomorrow)
 - 🛠️ Setup groundwork to analyze real Twitter data and combine it with daily routine for smarter dream decoding
 
+## 📓 Journal Summary (April 13)
+
+- Realized serverless platforms like **Vercel** are not suitable for Puppeteer due to **10s execution timeout**.
+- Decided to split the app into **separate frontend (Vercel)** and **backend (to be deployed on Fly.io/Railway)** where Puppeteer can run freely.
+- Faced bugs during the split:
+  - Puppeteer failed to launch due to missing dependencies.
+  - CORS issues between frontend and new backend.
+- Also tweaked parts of the UI, fixed styling bugs.
+- Still need to finalize the new design — will complete UI changes tomorrow.
+- Deployment and cleanup planned once everything runs smoothly.
+- Learning a lot about the tradeoffs between serverless and serverful hosting!
+
 ---
