@@ -80,7 +80,7 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
     : "- You're making progress, but are you really on the right track?"
 
   const caughtSection = decoded.includes("🔴 Caught in4K:")
-    ? decoded.split("🔴 Caught in4K:")[1].split("⏳")[0]
+    ? decoded.split("🔴 Caught in 4K:")[1].split("⏳")[0]
     : "- Let's be honest about where you're falling short."
 
   const timeSection = decoded.includes("⏳ Time to Touch Grass")
