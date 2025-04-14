@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 interface Decoded {
   decoded: string | null
 }
@@ -68,7 +70,16 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
             {decoded.replace("Error:", "").trim()}
           </p>
           <p className="text-sm text-gray-300 text-center mt-2">
-            Please try again or contact support if the issue persists.
+            Please try again or drop a DM to{" "}
+            <Link
+              href={"https://x.com/itshp7"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-yellow-400 underline"
+            >
+              me
+            </Link>{" "}
+            if the issue persists.
           </p>
         </div>
       </div>
