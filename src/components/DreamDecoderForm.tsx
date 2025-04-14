@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { cn } from "@/lib/utils"
 import { toast } from "@/hooks/use-toast"
-import { useSession } from "next-auth/react"
 
 const formSchema = z.object({
   username: z.string().optional(),
@@ -20,7 +19,6 @@ const formSchema = z.object({
 })
 
 export default function DreamDecoderForm() {
-  const { data: session } = useSession()
   const [decoded, setDecoded] = useState("")
   const [loading, setLoading] = useState(false)
   const [showResult, setShowResult] = useState(false)
@@ -28,23 +26,15 @@ export default function DreamDecoderForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: session?.user?.name || "",
+      username: "",
       routine: "",
       dream: "",
     },
   })
 
-  useEffect(() => {
-    if (session?.user?.name) {
-      form.setValue("username", session.user.name)
-    }
-  }, [session, form])
-
   const API_URL =
     process.env.NEXT_PUBLIC_API_URL! ||
     "http://localhost:3001/api/dream-roast"
-
-  console.log(API_URL)
 
   const handleDecode = async (values: z.infer<typeof formSchema>) => {
     setLoading(true)
@@ -118,7 +108,7 @@ export default function DreamDecoderForm() {
                     <Textarea
                       rows={3}
                       placeholder="Your Username without any @ example: itshp7"
-                      disabled={loading || !!session?.user?.name}
+                      disabled={loading}
                       {...field}
                     />
                   </FormItem>
