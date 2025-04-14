@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useTransition } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { FaSpinner } from "react-icons/fa"
@@ -10,6 +10,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { cn } from "@/lib/utils"
+import { toast } from "@/hooks/use-toast"
+import { useSession } from "next-auth/react"
 
 const formSchema = z.object({
   username: z.string().optional(),
@@ -18,7 +20,7 @@ const formSchema = z.object({
 })
 
 export default function DreamDecoderForm() {
-  const [, startTransition] = useTransition()
+  const { data: session } = useSession()
   const [decoded, setDecoded] = useState("")
   const [loading, setLoading] = useState(false)
   const [showResult, setShowResult] = useState(false)
@@ -26,46 +28,65 @@ export default function DreamDecoderForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      username: session?.user?.name || "",
       routine: "",
       dream: "",
     },
   })
 
+  useEffect(() => {
+    if (session?.user?.name) {
+      form.setValue("username", session.user.name)
+    }
+  }, [session, form])
+
+  const API_URL =
+    process.env.API_URL || "http://localhost:3001/api/dream-roast"
+
   const handleDecode = async (values: z.infer<typeof formSchema>) => {
     setLoading(true)
-    startTransition(async () => {
-      try {
-        const res = await fetch(
-          "https://dream-decodebackend-production.up.railway.app/api/dream-roast",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              username: values.username,
-              dream: values.dream,
-              routine: values.routine,
-            }),
-          }
-        )
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: values.username,
+          dream: values.dream,
+          routine: values.routine,
+        }),
+      })
 
-        const data = await res.json()
+      const data = await res.json()
 
-        if (res.ok) {
-          setDecoded(data)
-        } else {
-          setDecoded("Error: " + data.error)
-        }
-        setShowResult(true)
-      } catch (err) {
-        setDecoded("Something went wrong.")
-        console.error(err)
-      } finally {
-        setLoading(false)
+      if (res.ok) {
+        setDecoded(data)
+        toast({
+          title: "Success",
+          description: "Your dream roast has been generated!",
+        })
+      } else {
+        setDecoded("Error: " + data.error)
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: data.error || "Something went wrong.",
+        })
       }
-    })
+      setShowResult(true)
+    } catch (err) {
+      setDecoded("Something went wrong.")
+      console.error(err)
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description:
+          "An unexpected error occurred. Please try again later.",
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -94,7 +115,7 @@ export default function DreamDecoderForm() {
                     <Textarea
                       rows={3}
                       placeholder="Your Username without any @ example: itshp7"
-                      disabled={loading}
+                      disabled={loading || !!session?.user?.name}
                       {...field}
                     />
                   </FormItem>
@@ -128,10 +149,14 @@ export default function DreamDecoderForm() {
                 name="dream"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-xl font-semibold">
+                    <FormLabel
+                      className="text-xl font-semibold"
+                      htmlFor="dream"
+                    >
                       3. Your end Goal or dream
                     </FormLabel>
                     <Textarea
+                      id="dream"
                       rows={3}
                       placeholder="Astronaut..."
                       disabled={loading}
@@ -172,7 +197,7 @@ export default function DreamDecoderForm() {
         className={cn(
           "w-full mt-6 lg:mt-0 transition-all duration-500 ease-in-out",
           showResult
-            ? "lg:w-1/2 opacity-100 translate-x-0"
+            ? "lg:w-1/2 opacity-100 translate-x-0 "
             : "lg:w-0 opacity-0 lg:translate-x-full"
         )}
       >

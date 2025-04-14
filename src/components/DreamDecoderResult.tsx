@@ -59,7 +59,21 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
       </div>
     )
   }
-
+  if (decoded.startsWith("Error:")) {
+    return (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="p-6 bg-red-900 text-white rounded-lg w-full max-w-lg">
+          <h2 className="text-2xl font-bold text-center">⚠️ Error</h2>
+          <p className="text-lg text-center mt-4">
+            {decoded.replace("Error:", "").trim()}
+          </p>
+          <p className="text-sm text-gray-300 text-center mt-2">
+            Please try again or contact support if the issue persists.
+          </p>
+        </div>
+      </div>
+    )
+  }
   // Parse the decoded text to extract sections
   const title = "🔥 Dream Roast Report 🔥"
 
