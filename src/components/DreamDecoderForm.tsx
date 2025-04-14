@@ -41,7 +41,10 @@ export default function DreamDecoderForm() {
   }, [session, form])
 
   const API_URL =
-    process.env.API_URL || "http://localhost:3001/api/dream-roast"
+    process.env.NEXT_PUBLIC_API_URL! ||
+    "http://localhost:3001/api/dream-roast"
+
+  console.log(API_URL)
 
   const handleDecode = async (values: z.infer<typeof formSchema>) => {
     setLoading(true)
