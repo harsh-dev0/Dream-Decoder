@@ -45,9 +45,9 @@ TWITTER_CLIENT_SECRET=your_secret
 - [x] Twitter OAuth
 - [x] Manual routine entry
 - [x] Dream decoding dummy logic
-- [ ] Add AI integration (OpenAI or similar)
-- [ ] Mobile-first polishing & animations
-- [ ] Deploy on Vercel 🚀
+- [x] Add AI integration (OpenAI or similar)
+- [x] Add Proper Error Handling
+- [x] Done for now 🚀
 
 ## 📸 Screenshots
 
@@ -58,6 +58,10 @@ TWITTER_CLIENT_SECRET=your_secret
 ### 🔹 Second Deployment
 
 ![Second Deployment](./public/screenshots/dev2.png)
+
+### 🔹 More ScreenShots
+
+![itshp7](./public/screenshots/dev3.png)
 
 ---
 
@@ -101,5 +105,13 @@ If you like what I’m building, consider supporting — it keeps the caffeine f
 - Still need to finalize the new design — will complete UI changes tomorrow.
 - Deployment and cleanup planned once everything runs smoothly.
 - Learning a lot about the tradeoffs between serverless and serverful hosting!
+
+## 📓 Journal Summary (April 14)
+
+- Refactored DreamDecoderResult UI for better error handling & UX
+- Debugged toast notifications for proper dismissal
+- Finalized Twitter OAuth integration & optimized session handling
+- Planned backend scraping for smarter dream decoding
+- Done for Now!! Onto next things
 
 ---
