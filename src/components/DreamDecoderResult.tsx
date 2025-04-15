@@ -7,53 +7,50 @@ interface Decoded {
 export default function DreamDecoderResult({ decoded }: Decoded) {
   if (!decoded) {
     return (
-      <div className="mt-4 space-y-6 p-6 bg-gray-900 text-white rounded-lg">
+      <div className="mt-4 p-4 bg-gray-900 text-white rounded-lg">
         <div className="animate-pulse">
-          {/* Report Card */}
-          <div className="p-5 bg-gray-800 rounded-lg space-y-4">
-            {/* Header with meter */}
-            <div className="flex items-center space-x-2">
-              <div className="h-6 w-6 bg-gray-600 rounded-full"></div>
-              <div className="h-6 bg-gray-600 rounded w-3/4"></div>
+          <div className="p-4 bg-gray-800 rounded-lg space-y-3">
+            <div className="flex flex-col items-center space-y-2">
+              <div className="h-6 w-3/4 bg-gray-600 rounded text-center"></div>
+              <div className="h-5 w-1/2 bg-gray-600 rounded"></div>
+              <div className="h-4 w-2/3 bg-gray-600 rounded mt-1"></div>
             </div>
 
             {/* First paragraph */}
-            <div className="flex items-start space-x-2">
-              <div className="h-5 w-5 bg-green-600 rounded-full mt-1 flex-shrink-0"></div>
-              <div className="space-y-2 w-full">
-                <div className="h-5 bg-gray-600 rounded w-full"></div>
-                <div className="h-5 bg-gray-600 rounded w-full"></div>
-                <div className="h-5 bg-gray-600 rounded w-4/5"></div>
+            <div className="flex items-start space-x-2 mt-3">
+              <div className="h-4 w-4 bg-green-600 rounded-full mt-1 flex-shrink-0"></div>
+              <div className="space-y-1.5 w-full">
+                <div className="h-4 bg-gray-600 rounded w-full"></div>
+                <div className="h-4 bg-gray-600 rounded w-full"></div>
+                <div className="h-4 bg-gray-600 rounded w-4/5"></div>
               </div>
             </div>
 
             {/* Second paragraph */}
-            <div className="flex items-start space-x-2">
-              <div className="h-5 w-5 bg-red-600 rounded-full mt-1 flex-shrink-0"></div>
-              <div className="space-y-2 w-full">
-                <div className="h-5 bg-gray-600 rounded w-full"></div>
-                <div className="h-5 bg-gray-600 rounded w-full"></div>
-                <div className="h-5 bg-gray-600 rounded w-11/12"></div>
-                <div className="h-5 bg-gray-600 rounded w-4/5"></div>
+            <div className="flex items-start space-x-2 mt-3">
+              <div className="h-4 w-4 bg-red-600 rounded-full mt-1 flex-shrink-0"></div>
+              <div className="space-y-1.5 w-full">
+                <div className="h-4 bg-gray-600 rounded w-full"></div>
+                <div className="h-4 bg-gray-600 rounded w-full"></div>
+                <div className="h-4 bg-gray-600 rounded w-11/12"></div>
               </div>
             </div>
 
             {/* Third paragraph */}
-            <div className="flex items-start space-x-2">
-              <div className="h-5 w-5 bg-yellow-600 rounded-full mt-1 flex-shrink-0"></div>
-              <div className="space-y-2 w-full">
-                <div className="h-5 bg-gray-600 rounded w-full"></div>
-                <div className="h-5 bg-gray-600 rounded w-full"></div>
-                <div className="h-5 bg-gray-600 rounded w-3/4"></div>
+            <div className="flex items-start space-x-2 mt-3">
+              <div className="h-4 w-4 bg-yellow-600 rounded-full mt-1 flex-shrink-0"></div>
+              <div className="space-y-1.5 w-full">
+                <div className="h-4 bg-gray-600 rounded w-full"></div>
+                <div className="h-4 bg-gray-600 rounded w-3/4"></div>
               </div>
             </div>
 
             {/* Final verdict */}
-            <div className="flex items-start space-x-2 pt-2">
-              <div className="h-5 w-5 bg-pink-600 rounded-full mt-1 flex-shrink-0"></div>
-              <div className="space-y-2 w-full">
-                <div className="h-5 bg-gray-600 rounded w-full"></div>
-                <div className="h-5 bg-gray-600 rounded w-11/12"></div>
+            <div className="flex items-start space-x-2 mt-4 pt-2 border-t border-gray-700">
+              <div className="h-4 w-4 bg-pink-600 rounded-full mt-1 flex-shrink-0"></div>
+              <div className="space-y-1.5 w-full">
+                <div className="h-4 bg-gray-600 rounded w-full"></div>
+                <div className="h-4 bg-gray-600 rounded w-11/12"></div>
               </div>
             </div>
           </div>
@@ -61,15 +58,16 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
       </div>
     )
   }
+
   if (decoded.startsWith("Error:")) {
     return (
-      <div className="w-full h-full flex items-center justify-center">
-        <div className="p-6 bg-red-900 text-white rounded-lg w-full max-w-lg">
-          <h2 className="text-2xl font-bold text-center">⚠️ Error</h2>
-          <p className="text-lg text-center mt-4">
+      <div className="w-full flex items-center justify-center p-4">
+        <div className="p-4 bg-red-900 text-white rounded-lg w-full">
+          <h2 className="text-xl font-bold text-center">⚠️ Error</h2>
+          <p className="text-base text-center mt-3">
             {decoded.replace("Error:", "").trim()}
           </p>
-          <p className="text-sm text-gray-300 text-center mt-2">
+          <p className="text-xs text-gray-300 text-center mt-2">
             Please try again or drop a DM to{" "}
             <Link
               href={"https://x.com/itshp7"}
@@ -85,12 +83,8 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
       </div>
     )
   }
-  // Parse the decoded text to extract sections
-  const title = "🔥 Dream Roast Report 🔥"
 
-  // Fixed the regex matches to handle null cases
   const dreamMeterMatch = decoded.match(/🎯 Dream Meter: (\d+)%/)
-
   const dreamMeter = dreamMeterMatch
     ? dreamMeterMatch[0]
     : "🎯 Dream Meter: 50%"
@@ -106,7 +100,6 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
 
   let caughtSection = "- Let's be honest about where you're falling short."
 
-  // Check for "🔴 Caught in 4K:" first
   if (decoded.includes("🔴 Caught in 4K:")) {
     const parts = decoded.split("🔴 Caught in 4K:")
     if (parts.length > 1) {
@@ -117,9 +110,7 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
         caughtSection = secondPart
       }
     }
-  }
-  // If first check fails, try with "🔴 Caught in4K:"
-  else if (decoded.includes("🔴 Caught in4K:")) {
+  } else if (decoded.includes("🔴 Caught in4K:")) {
     const parts = decoded.split("🔴 Caught in4K:")
     if (parts.length > 1) {
       const secondPart = parts[1]
@@ -140,52 +131,70 @@ export default function DreamDecoderResult({ decoded }: Decoded) {
     : '"Dreams are nice, but waking up to reality is where the magic happens."'
 
   return (
-    <div className="mt-4 space-y-6 p-6 bg-gray-900 text-white rounded-lg">
-      <div>
-        {/* Report Card */}
-        <div className="p-5 bg-gray-800 rounded-lg space-y-4">
-          {/* Header with meter */}
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold mb-2">{title}</h2>
-            <div className="flex items-center justify-center space-x-2">
-              <span className="text-lg font-semibold">{dreamMeter}</span>
-            </div>
-            <p className="italic text-gray-300 mt-2">{dreamQuote}</p>
-          </div>
+    <div className="mt-4 p-4 bg-gray-900 text-white rounded-lg">
+      <div className="bg-gray-800 rounded-lg overflow-hidden">
+        {/* Header with fire emojis and title */}
+        <div className="bg-gray-700 p-3 text-center">
+          <h2 className="text-xl font-bold flex items-center justify-center gap-2">
+            <span className="text-orange-500">🔥</span>
+            Dream Roast Report
+            <span className="text-orange-500">🔥</span>
+          </h2>
+        </div>
 
-          {/* First section */}
-          <div className="flex items-start space-x-2">
-            <div className="h-5 w-5 bg-green-600 rounded-full mt-1 flex-shrink-0"></div>
-            <div>
-              <span className="font-semibold">Delulu or Doing Fine?</span>
-              <p>{deluluSection}</p>
-            </div>
-          </div>
+        {/* Dream Meter and Quote */}
+        <div className="p-3 text-center border-b border-gray-700">
+          <div className="font-semibold text-base mb-1">{dreamMeter}</div>
+          <p className="italic text-sm text-gray-300">{dreamQuote}</p>
+        </div>
 
-          {/* Second section */}
-          <div className="flex items-start space-x-2 mt-4">
-            <div className="h-5 w-5 bg-red-600 rounded-full mt-1 flex-shrink-0"></div>
+        {/* Content sections */}
+        <div className="p-3 space-y-4">
+          {/* Delulu section */}
+          <div className="flex items-start gap-2">
+            <div className="h-4 w-4 bg-green-600 rounded-full mt-1 flex-shrink-0"></div>
             <div>
-              <span className="font-semibold">Caught in 4K:</span>
-              <p>{caughtSection}</p>
-            </div>
-          </div>
-
-          {/* Third section */}
-          <div className="flex items-start space-x-2 mt-4">
-            <div className="h-5 w-5 bg-yellow-600 rounded-full mt-1 flex-shrink-0"></div>
-            <div>
-              <span className="font-semibold">Time to Touch Grass:</span>
-              <p>{timeSection}</p>
+              <div className="font-medium text-sm">
+                Delulu or Doing Fine?
+              </div>
+              <p className="text-sm text-gray-300 mt-0.5">
+                {deluluSection}
+              </p>
             </div>
           </div>
 
-          {/* Final verdict */}
-          <div className="flex items-start space-x-2 mt-6 pt-4 border-t border-gray-700">
-            <div className="h-5 w-5 bg-pink-600 rounded-full mt-1 flex-shrink-0"></div>
+          {/* Caught in 4K section */}
+          <div className="flex items-start gap-2">
+            <div className="h-4 w-4 bg-red-600 rounded-full mt-1 flex-shrink-0"></div>
             <div>
-              <span className="font-semibold">Final Verdict:</span>
-              <p className="italic">{finalVerdict}</p>
+              <div className="font-medium text-sm">Caught in 4K:</div>
+              <p className="text-sm text-gray-300 mt-0.5">
+                {caughtSection}
+              </p>
+            </div>
+          </div>
+
+          {/* Time to Touch Grass section */}
+          <div className="flex items-start gap-2">
+            <div className="h-4 w-4 bg-yellow-600 rounded-full mt-1 flex-shrink-0"></div>
+            <div>
+              <div className="font-medium text-sm">
+                Time to Touch Grass:
+              </div>
+              <p className="text-sm text-gray-300 mt-0.5">{timeSection}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Final verdict */}
+        <div className="p-3 bg-gray-700 mt-1">
+          <div className="flex items-start gap-2">
+            <div className="h-4 w-4 bg-pink-600 rounded-full mt-1 flex-shrink-0"></div>
+            <div>
+              <div className="font-medium text-sm">Final Verdict:</div>
+              <p className="italic text-sm text-gray-300 mt-0.5">
+                {finalVerdict}
+              </p>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { FaSpinner } from "react-icons/fa"
@@ -22,6 +22,7 @@ export default function DreamDecoderForm() {
   const [decoded, setDecoded] = useState("")
   const [loading, setLoading] = useState(false)
   const [showResult, setShowResult] = useState(false)
+  const resultRef = useRef<HTMLDivElement>(null)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -68,6 +69,16 @@ export default function DreamDecoderForm() {
         })
       }
       setShowResult(true)
+
+      if (resultRef.current) {
+        const isMobile = window.matchMedia("(max-width: 768px)").matches
+        if (isMobile) {
+          resultRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          })
+        }
+      }
     } catch (err) {
       setDecoded("Something went wrong.")
       console.error(err)
@@ -187,6 +198,7 @@ export default function DreamDecoderForm() {
 
       {/* Result section with animation */}
       <div
+        ref={resultRef}
         className={cn(
           "w-full mt-6 lg:mt-0 transition-all duration-500 ease-in-out",
           showResult
